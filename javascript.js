@@ -3,7 +3,7 @@ let moveBy = 20;
 
 window.addEventListener("load", () => {
   rocket.style.position = "absolute";
-  rocket.style.left = "0px";
+  rocket.style.left = "500px";
   rocket.style.top = "470px";
 });
 
@@ -13,11 +13,7 @@ enemy.style.left = "0px";
 enemy.style.top = "0px";
 enemy.style.width = "7%";
 
-
-
 moveEnemy();
-
-
 
 window.addEventListener("keydown", (e) => {
   switch (e.key) {
@@ -39,6 +35,7 @@ window.addEventListener("keydown", (e) => {
       beam.style.left = parseInt(rocket.style.left) + 48 + "px";
       document.body.append(beam);
       beamMove(beam);
+      playBeam();
       break;
     /*case "ArrowDown":
             rocket.style.top = parseInt(rocket.style.top) + moveBy + "px";
@@ -66,8 +63,9 @@ function beamMove(beam) {
   }
 
   if(checkHit(beam)) {
-    enemy.remove();
+    playDestroy();
     beam.remove();
+    enemy.remove(); 
     return;
   }
   
@@ -75,16 +73,18 @@ function beamMove(beam) {
   
 }
 
+
+
 function moveEnemy() {
   let enemyLeft = parseInt(enemy.style.left);
-  enemy.style.left = enemyLeft + 5 + "px";
+  enemy.style.left = enemyLeft + 10 + "px";
   if (enemyLeft > 1060) {
     let enemyTop = parseInt(enemy.style.top);
     enemy.style.top = enemyTop + 50 + "px";
     enemy.style.left = "0px";
   }
-  
   setTimeout(() => moveEnemy(), 40);
+  
   
 }
 
@@ -96,9 +96,17 @@ function checkHit(beam) {
 let enemyYWithSize = enemyY + 40;
 let enemyXWithSize = enemyX + 60;
 if (beamX >=enemyX && beamX <=enemyXWithSize && beamY>=enemyY&&beamY<=enemyYWithSize ){
-   return true;
-  
-  
-}
+   return true; 
+  }
 return false;
+}
+
+
+function playBeam() {
+  var audio = new Audio("/mixkit-sci-fi-laser-in-space-sound-2825.wav");
+  audio.play();
+}
+function playDestroy() {
+  var audio = new Audio("/mixkit-video-game-power-up-3164.wav");
+  audio.play();
 }
