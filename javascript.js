@@ -91,7 +91,7 @@ function beamMove(beam) {
 function moveEnemy() {
   let enemyLeft = parseInt(enemy.style.left);
   enemy.style.left = enemyLeft + 2 + "px";
-  if (enemyLeft > 988) {
+  if (enemyLeft > 950) {
     let enemyTop = parseInt(enemy.style.top);
     enemy.style.top = enemyTop + 50 + "px";
     enemy.style.left = "0px";
