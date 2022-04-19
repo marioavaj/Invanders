@@ -13,7 +13,7 @@ let enemy = document.querySelector(".enemy");
 enemy.style.position = "absolute";
 enemy.style.left = "160px";
 enemy.style.top = "0px";
-enemy.style.width = "15%";
+enemy.style.width = "170px";
 
 
 
