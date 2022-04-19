@@ -1,30 +1,34 @@
 let rocket = document.querySelector(".rocket");
 let moveBy = 20;
+let shots=0;
 
 window.addEventListener("load", () => {
   rocket.style.position = "absolute";
   rocket.style.left = "500px";
-  rocket.style.top = "470px";
+  rocket.style.top = "450px";
+  rocket.style.width = "120px";
 });
 
 let enemy = document.querySelector(".enemy");
 enemy.style.position = "absolute";
-enemy.style.left = "0px";
+enemy.style.left = "160px";
 enemy.style.top = "0px";
-enemy.style.width = "7%";
+enemy.style.width = "15%";
+
+
 
 moveEnemy();
 
 window.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "ArrowLeft":
-      if (parseInt(rocket.style.left) > 0) {
+      if (parseInt(rocket.style.left) > 200) {
         let rocketLeft = parseInt(rocket.style.left);
         rocket.style.left = rocketLeft - moveBy + "px";
       }
       break;
     case "ArrowRight":
-      if (parseInt(rocket.style.left) < 1060) {
+      if (parseInt(rocket.style.left) < 1000) {
         let rocketRight = parseInt(rocket.style.left);
         rocket.style.left = rocketRight + moveBy + "px";
       }
@@ -32,7 +36,7 @@ window.addEventListener("keydown", (e) => {
 
     case "ArrowUp":
       let beam = createBeam();
-      beam.style.left = parseInt(rocket.style.left) + 48 + "px";
+      beam.style.left = parseInt(rocket.style.left) + 58 + "px";
       document.body.append(beam);
       beamMove(beam);
       playBeam();
@@ -55,20 +59,29 @@ function createBeam() {
 
 function beamMove(beam) {
   let beamTop = parseInt(beam.style.top);
-  beam.style.top = beamTop - 20 + "px";
+  beam.style.top = beamTop - 10 + "px";
   if (beamTop < 0) {
     /*console.log("in if");*/
     beam.remove();
     return;
   }
-
+    
   if(checkHit(beam)) {
-    playDestroy();
-    beam.remove();
-    enemy.remove(); 
-    return;
+    shots +=1;
+    if (shots<5){
+    document.getElementById("shots").innerText=shots+ "/5";
+  } else  document.getElementById("shots").innerText=(" You lazy Bastard...\nSanta is dead...\n Are You Happy?");
+  playDestroy();
+  beam.remove();
+    if (shots>4){
+      totalDestructionSound();
+      santaScream();
+      beam.remove();
+      enemy.remove(); 
+      return;
+    } return;   
   }
-  
+
   setTimeout(() => beamMove(beam), 40);
   
 }
@@ -77,13 +90,13 @@ function beamMove(beam) {
 
 function moveEnemy() {
   let enemyLeft = parseInt(enemy.style.left);
-  enemy.style.left = enemyLeft + 10 + "px";
-  if (enemyLeft > 1060) {
+  enemy.style.left = enemyLeft + 2 + "px";
+  if (enemyLeft > 988) {
     let enemyTop = parseInt(enemy.style.top);
     enemy.style.top = enemyTop + 50 + "px";
     enemy.style.left = "0px";
   }
-  setTimeout(() => moveEnemy(), 40);
+  setTimeout(() => moveEnemy(), 10);
   
   
 }
@@ -94,7 +107,7 @@ function checkHit(beam) {
   let enemyX = parseInt(enemy.style.left);
   let enemyY =parseInt(enemy.style.top)
 let enemyYWithSize = enemyY + 40;
-let enemyXWithSize = enemyX + 60;
+let enemyXWithSize = enemyX + 100;
 if (beamX >=enemyX && beamX <=enemyXWithSize && beamY>=enemyY&&beamY<=enemyYWithSize ){
    return true; 
   }
@@ -103,10 +116,49 @@ return false;
 
 
 function playBeam() {
-  var audio = new Audio("/mixkit-sci-fi-laser-in-space-sound-2825.wav");
+  var audio = new Audio("./mixkit-sci-fi-laser-in-space-sound-2825.wav");
   audio.play();
 }
 function playDestroy() {
-  var audio = new Audio("/mixkit-video-game-power-up-3164.wav");
+  var audio = new Audio("./mixkit-video-game-power-up-3164.wav");
   audio.play();
 }
+
+function soundtrack() {
+  var audio = new Audio("./jingle-bells-SBA-300505739-preview.mp3");
+  audio.play();
+}
+
+function hohoho() {
+  var audio = new Audio("./male-shouts-ho-ho-ho-merry-christmas-to-everybody-SBA-300055397-preview.mp3");
+  audio.play();
+}
+
+function totalDestructionSound() {
+  var audio = new Audio("./mixkit-car-explosion-debris-1562.wav");
+  audio.play();
+}
+
+function santaScream() {
+  var audio = new Audio("./mixkit-falling-male-scream-391.wav");
+  audio.play();
+}
+
+
+
+/*function santaFall() {
+  let id = null;
+  const enemy = document.querySelector(".enemy");   
+  let pos = 0;
+  clearInterval(id);
+  id = setInterval(frame, 5);
+  function frame() {
+    if (pos == 350) {
+      clearInterval(id);
+    } else {
+      pos++; 
+      enemy.style.top = pos + "px"; 
+      enemy.style.left = pos + "px"; 
+    }
+  }
+}*/

@@ -8,6 +8,27 @@ body{
     background-size: 100%;
 }
 
+ul{
+    margin-top: -20px;
+    margin-left: -40px;
+    position: absolute;
+    height: 511px;
+    background-color: rgba(28, 28, 28, 0.555);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.3em;
+    list-style-type:none;
+    padding: 1em;
+    color: white;
+}
+ul #pocetZasahov{
+    color: blueviolet;
+}
+
+h1{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    color:darkorange;
+    font-size: 1.4em
+}
 
    
 
