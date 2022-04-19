@@ -5,7 +5,7 @@ let shots=0;
 window.addEventListener("load", () => {
   rocket.style.position = "absolute";
   rocket.style.left = "500px";
-  rocket.style.top = "450px";
+  rocket.style.top = "550px";
   rocket.style.width = "120px";
 });
 
@@ -53,7 +53,7 @@ function createBeam() {
   beam.style.height = "10px";
   beam.style.backgroundColor = "yellow";
   beam.style.position = "absolute";
-  beam.style.top = "450px";
+  beam.style.top = "550px";
   return beam;
 }
 
