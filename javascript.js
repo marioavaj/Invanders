@@ -1,17 +1,20 @@
 let rocket = document.querySelector(".rocket");
 let moveBy = 20;
 let shots=0;
+let directionLeft;
+let directionTop;
 
 window.addEventListener("load", () => {
   rocket.style.position = "absolute";
   rocket.style.left = "500px";
   rocket.style.top = "450px";
   rocket.style.width = "120px";
+
 });
 
 let enemy = document.querySelector(".enemy");
 enemy.style.position = "absolute";
-enemy.style.left = "160px";
+enemy.style.left = "-170px";
 enemy.style.top = "0px";
 enemy.style.width = "170px";
 
@@ -32,20 +35,21 @@ window.addEventListener("keydown", (e) => {
         let rocketRight = parseInt(rocket.style.left);
         rocket.style.left = rocketRight + moveBy + "px";
       }
-      break;
+      break;    
+    
+  }
+});
 
-    case "ArrowUp":
+window.addEventListener("keyup", (shots) => {
+  switch (shots.key) {
+  case "ArrowUp":
       let beam = createBeam();
       beam.style.left = parseInt(rocket.style.left) + 58 + "px";
       document.body.append(beam);
       beamMove(beam);
       playBeam();
-      break;
-    /*case "ArrowDown":
-            rocket.style.top = parseInt(rocket.style.top) + moveBy + "px";
-            break;*/
-  }
-});
+      break;  }
+    });
 
 function createBeam() {
   let beam = document.createElement("div");
@@ -74,32 +78,47 @@ function beamMove(beam) {
   playDestroy();
   beam.remove();
     if (shots>4){
-      totalDestructionSound();
       santaScream();
       beam.remove();
-      enemy.remove(); 
+      totalDestructionSound();
+      enemy.remove();
       return;
     } return;   
   }
+  setTimeout(() => beamMove(beam), 10);
+  }
 
-  setTimeout(() => beamMove(beam), 40);
-  
-}
 
 
 
 function moveEnemy() {
   let enemyLeft = parseInt(enemy.style.left);
-  enemy.style.left = enemyLeft + 2 + "px";
-  if (enemyLeft > 950) {
-    let enemyTop = parseInt(enemy.style.top);
-    enemy.style.top = enemyTop + 50 + "px";
-    enemy.style.left = "0px";
+   let enemyTop = parseInt(enemy.style.top);
+  if (enemyLeft < -169) {
+    directionLeft=1;
+    enemy.style.transform= "scaleX(1)";
   }
+  if (enemyLeft >  950) {
+   directionLeft=-1;
+   enemy.style.transform= "scaleX(-1)";
+  }
+
+  if (enemyTop < 1) {
+    directionTop=1;
+    
+  }
+  if (enemyTop > Math.floor(Math.random() * 500)+100) {    
+   directionTop=-1;
+   
+  }
+    enemy.style.left = enemyLeft + ((directionLeft)*3)+ "px";
+    enemy.style.top = enemyTop + ((directionTop)*1)+ "px";
+      
   setTimeout(() => moveEnemy(), 10);
   
-  
 }
+
+
 
 function checkHit(beam) {
   let beamX = parseInt(beam.style.left);
@@ -113,6 +132,7 @@ if (beamX >=enemyX && beamX <=enemyXWithSize && beamY>=enemyY&&beamY<=enemyYWith
   }
 return false;
 }
+
 
 
 function playBeam() {
@@ -146,19 +166,4 @@ function santaScream() {
 
 
 
-/*function santaFall() {
-  let id = null;
-  const enemy = document.querySelector(".enemy");   
-  let pos = 0;
-  clearInterval(id);
-  id = setInterval(frame, 5);
-  function frame() {
-    if (pos == 350) {
-      clearInterval(id);
-    } else {
-      pos++; 
-      enemy.style.top = pos + "px"; 
-      enemy.style.left = pos + "px"; 
-    }
-  }
-}*/
+

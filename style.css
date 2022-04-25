@@ -6,6 +6,7 @@ body{
     background-image: url("./galaxy-orezane.jpg");
     background-repeat: no-repeat;
     background-size: 1100px;
+    
 }
 
 ul{
@@ -28,6 +29,14 @@ h1{
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
     color:darkorange;
     font-size: 1.4em
+}
+
+#start{
+    position: absolute;
+    top: 480px;
+    left: 3px;
+    width: 200px;
+    height: 50px;
 }
 
    
