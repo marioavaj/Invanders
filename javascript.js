@@ -92,6 +92,8 @@ function beamMove(beam) {
 
 
 function moveEnemy() {
+  let santaSpeed = (Math.floor(Math.random() * 10));
+  console.log(santaSpeed)
   let enemyLeft = parseInt(enemy.style.left);
    let enemyTop = parseInt(enemy.style.top);
   if (enemyLeft < -169) {
@@ -114,7 +116,7 @@ function moveEnemy() {
     enemy.style.left = enemyLeft + ((directionLeft)*3)+ "px";
     enemy.style.top = enemyTop + ((directionTop)*1)+ "px";
       
-  setTimeout(() => moveEnemy(), 10);
+  setTimeout(() => moveEnemy(), santaSpeed);
   
 }
 
