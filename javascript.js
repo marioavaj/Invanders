@@ -72,12 +72,12 @@ function beamMove(beam) {
     
   if(checkHit(beam)) {
     shots +=1;
-    if (shots<5){
-    document.getElementById("shots").innerText=shots+ "/5";
+    if (shots<10){
+    document.getElementById("shots").innerText=shots+ "/10";
   } else  document.getElementById("shots").innerText=(" You lazy Bastard...\nSanta is dead...\n Are You Happy?");
   playDestroy();
   beam.remove();
-    if (shots>4){
+    if (shots>9){
       santaScream();
       beam.remove();
       totalDestructionSound();
