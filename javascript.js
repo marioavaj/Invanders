@@ -3,6 +3,8 @@ let moveBy = 20;
 let shots = 0;
 let directionLeft;
 let directionTop;
+let enemyDown = false;
+
 
 let enemy = document.querySelector(".enemy");
 enemy.style.position = "absolute";
@@ -15,8 +17,8 @@ rocket.style.left = "588px";
 rocket.style.top = "450px";
 rocket.style.width = "120px";
 
+/*start game ----------------------------------------------------------*/
 function startGame() {
-  
   moveEnemy();
 
   window.addEventListener("keydown", (e) => {
@@ -69,18 +71,22 @@ function startGame() {
 
     if (checkHit(beam)) {
       shots += 1;
-      if (shots < 10) {
+      if (shots < 2) {
         document.getElementById("shots").innerText = shots + "/10";
-      } else
+        } else
         document.getElementById("shots").innerText =
           " You lazy Bastard...\nSanta is dead...\n Are You Happy?";
       playDestroy();
       beam.remove();
-      if (shots > 9) {
+
+      if (shots > 2) {
         santaScream();
         beam.remove();
         totalDestructionSound();
         enemy.remove();
+        enemy.style.left = "-170px";
+        enemy.style.top = "0px";
+        enemyDown=true;
         return;
       }
       return;
@@ -89,7 +95,7 @@ function startGame() {
   }
 
   function moveEnemy() {
-    let santaSpeed = Math.floor(Math.random() * 10);
+    
     let enemyLeft = parseInt(enemy.style.left);
     let enemyTop = parseInt(enemy.style.top);
     if (enemyLeft < -169) {
@@ -100,7 +106,6 @@ function startGame() {
       directionLeft = -1;
       enemy.style.transform = "scaleX(-1)";
     }
-
     if (enemyTop < 1) {
       directionTop = 1;
     }
@@ -109,9 +114,23 @@ function startGame() {
     }
     enemy.style.left = enemyLeft + directionLeft * 3 + "px";
     enemy.style.top = enemyTop + directionTop * 1 + "px";
-
-    setTimeout(() => moveEnemy(), santaSpeed);
+    enemyTimer();
+    
   }
+
+  function enemyTimer() {
+    let santaSpeed = Math.floor(Math.random() * 10);
+    if (enemyDown===false){
+    let enemyTimer = setTimeout(() => moveEnemy(), santaSpeed);
+    return enemyTimer;  
+    }else { 
+      clearTimeout (enemyTimer);
+    return enemyTimer;
+      }
+  
+  }
+
+  
 
   function checkHit(beam) {
     let beamX = parseInt(beam.style.left);
