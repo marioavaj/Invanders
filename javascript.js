@@ -5,7 +5,6 @@ let directionLeft;
 let directionTop;
 let enemyDown = false;
 
-
 let enemy = document.querySelector(".enemy");
 enemy.style.position = "absolute";
 enemy.style.left = "-170px";
@@ -17,10 +16,15 @@ rocket.style.left = "588px";
 rocket.style.top = "450px";
 rocket.style.width = "120px";
 
+
 /*start game ----------------------------------------------------------*/
 function startGame() {
   moveEnemy();
+  hohoho();
+  soundtrack();
 
+  /** pohyb lode pomocou switch */
+  
   window.addEventListener("keydown", (e) => {
     switch (e.key) {
       case "ArrowLeft":
@@ -38,6 +42,8 @@ function startGame() {
     }
   });
 
+  /**Strelba pomocou switch */
+
   window.addEventListener("keyup", (shots) => {
     switch (shots.key) {
       case "ArrowUp":
@@ -49,7 +55,7 @@ function startGame() {
         break;
     }
   });
-
+/*vytvorenie laser. luca (div html + style css) pomocou js*/
   function createBeam() {
     let beam = document.createElement("div");
     beam.style.width = "4px";
@@ -59,43 +65,48 @@ function startGame() {
     beam.style.top = "450px";
     return beam;
   }
-
+/*pohyb luca lasera (ak nezasiahne na konci obazovky sa vymaze*/
   function beamMove(beam) {
     let beamTop = parseInt(beam.style.top);
     beam.style.top = beamTop - 10 + "px";
     if (beamTop < 0) {
       /*console.log("in if");*/
       beam.remove();
+      console.log(beamTop);
       return;
     }
 
+    /*kontrola zasahu + pocitadlo zasahov + vypis zasahov na obrazovku*/
     if (checkHit(beam)) {
       shots += 1;
-      if (shots < 2) {
-        document.getElementById("shots").innerText = shots + "/10";
-        } else
+      if (shots < 5) {
+        document.getElementById("shots").innerText = shots + "/5";
+      } else
         document.getElementById("shots").innerText =
           " You lazy Bastard...\nSanta is dead...\n Are You Happy?";
       playDestroy();
       beam.remove();
 
-      if (shots > 2) {
+      if (shots >= 5) {
         santaScream();
         beam.remove();
         totalDestructionSound();
-        enemy.remove();
-        enemy.style.left = "-170px";
-        enemy.style.top = "0px";
-        enemyDown=true;
+        enemyColaps();
         return;
       }
       return;
     }
     setTimeout(() => beamMove(beam), 10);
   }
-
+/*zostrelenie nepriatela*/
+  function enemyColaps() {
+    enemy.remove();
+    enemy.style.left = "-170px";
+    enemy.style.top = "0px";
+    enemyDown = true;
+  }
+/*pohyb nepriatela do prava a hore/dole s otockou na konci pomocou premennej directionLeft directionTop */
   function moveEnemy() {
-    
     let enemyLeft = parseInt(enemy.style.left);
     let enemyTop = parseInt(enemy.style.top);
     if (enemyLeft < -169) {
@@ -115,23 +126,19 @@ function startGame() {
     enemy.style.left = enemyLeft + directionLeft * 3 + "px";
     enemy.style.top = enemyTop + directionTop * 1 + "px";
     enemyTimer();
-    
   }
-
+  /*Opakovanie pohybu enmy + v pripade zostrelenia zastavenie pohybu enemy */
   function enemyTimer() {
     let santaSpeed = Math.floor(Math.random() * 10);
-    if (enemyDown===false){
-    let enemyTimer = setTimeout(() => moveEnemy(), santaSpeed);
-    return enemyTimer;  
-    }else { 
-      clearTimeout (enemyTimer);
-    return enemyTimer;
-      }
-  
+    if (enemyDown === false) {
+      let enemyTimer = setTimeout(() => moveEnemy(), santaSpeed);
+      return enemyTimer;
+    } else {
+      clearTimeout(enemyTimer);
+      return enemyTimer;
+    }
   }
-
-  
-
+/*Kontrola ci sa suradnice beam a enemy zhoduju*/
   function checkHit(beam) {
     let beamX = parseInt(beam.style.left);
     let beamY = parseInt(beam.style.top);
@@ -150,32 +157,23 @@ function startGame() {
     return false;
   }
 
+  /**Zvuky */
   function playBeam() {
     var audio = new Audio("./mixkit-sci-fi-laser-in-space-sound-2825.wav");
-    audio.play();
-  }
+    audio.play();  }
   function playDestroy() {
     var audio = new Audio("./mixkit-video-game-power-up-3164.wav");
-    audio.play();
-  }
-
+    audio.play();  }
   function soundtrack() {
     var audio = new Audio("./jingle-bells-SBA-300505739-preview.mp3");
-    audio.play();
-  }
-
+    audio.play();  }
   function hohoho() {
     var audio = new Audio(
-      "./male-shouts-ho-ho-ho-merry-christmas-to-everybody-SBA-300055397-preview.mp3"
-    );
-    audio.play();
-  }
-
+      "./Merry-Chirstmas.mp3"    );
+    audio.play();  }
   function totalDestructionSound() {
     var audio = new Audio("./mixkit-car-explosion-debris-1562.wav");
-    audio.play();
-  }
-
+    audio.play();  }
   function santaScream() {
     var audio = new Audio("./mixkit-falling-male-scream-391.wav");
     audio.play();
